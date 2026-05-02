@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables
+.env
+.env.local
+.env.*
+
+# Secrets / Keys
+*.json
+!package.json
+!package-lock.json
+
+# Logs
+*.log
+logs/
+
+# IDE / OS specific
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
