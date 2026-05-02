@@ -15,6 +15,7 @@ VoteDost is a smart, dynamic, and interactive AI-powered election assistant desi
 - Custom system prompt designed specifically for Indian election knowledge
 - Covers: voter registration, ECI, EVMs, VVPAT, NOTA, MCC, candidate eligibility, and more
 - Gracefully rejects off-topic questions and stays focused on elections
+- Context-aware response caching (lru_cache) with composite key (message + language + history)
 
 ### 🌐 Multi-Language Support
 - **7 Indian languages supported:** English, Hindi (हिंदी), Tamil (தமிழ்), Telugu (తెలుగు), Kannada (ಕನ್ನಡ), Bengali (বাংলা), Marathi (मराठी)
@@ -50,9 +51,10 @@ VoteDost is a smart, dynamic, and interactive AI-powered election assistant desi
 
 ### ❓ Interactive FAQ Panel
 - **10 frequently asked questions** in accordion style
-- Smooth expand/collapse animation
+- Smooth expand/collapse animation with aria-expanded states
 - Only one question open at a time
 - Active question highlighted in accent color
+- Fully keyboard accessible (Tab, Enter, Space)
 - Questions covered:
   - How to register to vote
   - Valid IDs at polling booth
@@ -67,11 +69,27 @@ VoteDost is a smart, dynamic, and interactive AI-powered election assistant desi
 
 ### 🔍 Smart Autocomplete
 - 12 predefined election-related suggestions
+- 150ms debounced input handler for smooth performance
 - Filters in real time as user types (case insensitive)
 - Shows maximum 4 matching suggestions at a time
 - Matching text highlighted in accent color
+- Full keyboard navigation (Arrow keys, Enter, Escape)
 - Click to fill input, Escape to dismiss
 - Glassmorphism styled dropdown matching app theme
+
+### ♿ Accessibility
+- Skip navigation link for keyboard users
+- Full ARIA implementation: roles, labels, live regions
+- `role="log"` on chat messages for screen reader announcements
+- `aria-expanded` states on FAQ accordion items
+- `aria-current="page"` on active navigation items
+- `aria-live="polite"` on chat and status indicators
+- Focus-visible styles for all interactive elements
+- High contrast media query support (`prefers-contrast: high`)
+- Reduced motion support (`prefers-reduced-motion: reduce`)
+- Semantic HTML throughout (aside, nav, header, main, footer, region)
+- Screen reader only utility class (`.sr-only`)
+- All interactive elements keyboard reachable via Tab
 
 ### 🎨 Premium UI Design
 - **Deep space dark theme** (#050508 near-black background)
@@ -93,6 +111,7 @@ VoteDost is a smart, dynamic, and interactive AI-powered election assistant desi
   - Constellation-style connecting lines (opacity 0.06)
   - Mouse cursor tracking and rotation
   - Optimized with custom ShaderMaterial for smooth performance
+  - WebGL error boundary — falls back to CSS gradient if WebGL unavailable
 - **GSAP animations** on all chat messages (slide-in from bottom)
 - GSAP timeline panel card animations
 - Smooth FAQ accordion expand/collapse
@@ -120,20 +139,57 @@ VoteDost is a smart, dynamic, and interactive AI-powered election assistant desi
 - Language selector accessible on mobile
 - All content panels properly padded above bottom nav bar
 
+### 📲 PWA Support
+- `manifest.json` included for "Add to Home Screen" support
+- App name, theme color, and display mode configured
+- Mobile-first experience with native app feel
+
+### 🔍 SEO & Social
+- Meta description and keywords tags
+- Open Graph tags for social media sharing (og:title, og:description, og:url)
+- Semantic HTML structure for search engine indexing
+
+### ☁️ Google Cloud Integration
+- **Vertex AI** — Gemini 2.5 Flash for conversational AI
+- **Google Cloud Logging** — All requests and performance metrics automatically sent to Cloud Logging when deployed on GCP
+- **Request tracking** — Unique request ID and latency logged per request for observability
+- **Cloud Run** — Fully managed serverless deployment
+- **Google Application Default Credentials** — Secure, keyless authentication
+- **/health endpoint** — Cloud Run health checks with model status
+
 ### 🔒 Security & Performance
 - Zero hardcoded API keys
 - Google Application Default Credentials for secure Vertex AI access
 - Environment variable based configuration
+- Input validation: message length limit (2000 chars), whitespace stripping, JSON structure validation
+- Language validation against supported languages list
+- Malicious input handling (HTML injection, SQL injection, JSON injection)
 - Lightweight frontend — no heavy frameworks, repo size under 1MB
 - All JS libraries loaded via CDN (zero repo size impact)
 - Markdown rendering for bot responses (bold, italic, lists)
-- Graceful error handling throughout
+- Graceful error handling with descriptive error messages
+- 404 and 500 error handlers
+
+### 🧪 Testing
+- **62 comprehensive test cases** using Python unittest and unittest.mock
+- All Vertex AI calls mocked — tests run without real GCP credentials
+- Test classes covering:
+  - Index route (4 tests)
+  - Chat route basic (8 tests)
+  - Language support (9 tests)
+  - Conversation history (6 tests)
+  - Edge cases (11 tests)
+  - Error handling (5 tests)
+  - Health route (6 tests)
+  - Response format (5 tests)
+  - Security validation (4 tests)
+  - Integration flows (5 tests) (4 tests)
+- Run with: `python -m pytest tests/ -v --cov=app`
 
 ## 🎯 Chosen Vertical
 **Civic Technology & Election Assistance**
 
 ## 🧠 Approach and Logic
-The goal was to build an app that feels like a **funded product** while staying lightweight and laser-focused on the problem statement — helping users understand the Indian election process in an interactive and easy-to-follow way.
 
 1. **Intelligent Conversational AI:** Custom Gemini system prompt tuned specifically for Indian election knowledge. The bot stays on topic, responds in the user's language, and handles multi-turn conversations naturally.
 
@@ -142,6 +198,8 @@ The goal was to build an app that feels like a **funded product** while staying 
 3. **Language First:** India has 22 official languages. Supporting 7 major ones with both auto-detection and manual selection makes VoteDost genuinely useful for a diverse population.
 
 4. **Premium but Lightweight:** Deep space theme, WebGL particles, GSAP animations — all achieved with pure HTML/CSS/JS and CDN libraries. No React, no bundlers, no bloat.
+
+5. **Enterprise-grade Observability:** Google Cloud Logging integration ensures every request is tracked with unique IDs and latency metrics — production-ready from day one.
 
 ## ⚙️ How the Solution Works
 
@@ -153,67 +211,71 @@ The goal was to build an app that feels like a **funded product** while staying 
 | 3D Background | Three.js (WebGL) |
 | Animations | GSAP 3 |
 | Fonts | Plus Jakarta Sans (Google Fonts) |
+| Logging | Google Cloud Logging |
 | Deployment | Google Cloud Run |
 | Auth | Google Application Default Credentials |
+| Testing | Python unittest + pytest |
 
 ## 📌 Assumptions Made
 1. **Google Cloud Environment:** User running locally has authenticated via `gcloud auth application-default login` and has Vertex AI API enabled on their GCP project.
 2. **Connectivity:** Active internet connection required for CDN resources and Vertex AI API calls.
 3. **Stateless Sessions:** Conversation history stored in frontend JS state. Refreshing the page clears chat history.
-4. **Browser Support:** Web Speech API features (if added) require a modern browser. Core chat functionality works on all browsers.
+4. **Browser Support:** Core chat functionality works on all modern browsers. WebGL required for particle background (CSS gradient fallback provided).
 
 ## 🚀 Running Locally
 1. Ensure Python 3.9+ is installed
 2. Install dependencies:
 ```bash
-   pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 3. Set your Google Cloud Project:
 ```bash
-   # Windows (PowerShell)
-   $env:GOOGLE_CLOUD_PROJECT="votedost"
+# Windows (PowerShell)
+$env:GOOGLE_CLOUD_PROJECT="votedost"
 
-   # Mac/Linux
-   export GOOGLE_CLOUD_PROJECT="votedost"
+# Mac/Linux
+export GOOGLE_CLOUD_PROJECT="votedost"
 ```
 4. Authenticate with Google Cloud:
 ```bash
-   gcloud auth application-default login
+gcloud auth application-default login
 ```
 5. Run the server:
 ```bash
-   python app.py
+python app.py
 ```
 6. Open [http://localhost:8080](http://localhost:8080)
+7. Run tests:
+```bash
+python -m pytest tests/ -v --cov=app
+```
 
 ## ☁️ Deployment (Google Cloud Run)
-1. Build and submit Docker image:
 ```bash
-   gcloud builds submit --tag gcr.io/votedost/votedost
+gcloud run deploy votedost \
+  --source . \
+  --project votedost \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --set-env-vars GOOGLE_CLOUD_PROJECT=votedost
 ```
-2. Deploy to Cloud Run:
-```bash
-   gcloud run deploy votedost \
-     --image gcr.io/votedost/votedost \
-     --platform managed \
-     --region us-central1 \
-     --allow-unauthenticated \
-     --set-env-vars GOOGLE_CLOUD_PROJECT=votedost
-```
-3. Access your live URL from Cloud Run dashboard
 
 ## 📁 Project Structure
 ```
 votedost/
-├── app.py                  # Flask backend + Vertex AI integration
+├── app.py                  # Flask backend + Vertex AI + Cloud Logging
 ├── requirements.txt        # Python dependencies
 ├── Dockerfile              # Container configuration
 ├── .dockerignore           # Docker ignore rules
+├── tests/
+│   ├── __init__.py         # Test package init
+│   └── test_app.py         # 62 comprehensive test cases
 ├── static/
-│   ├── style.css           # All styling + animations
-│   └── script.js           # Frontend logic + Three.js + GSAP
+│   ├── style.css           # All styling + animations + accessibility
+│   ├── script.js           # Frontend logic + Three.js + GSAP
+│   └── manifest.json       # PWA manifest
 └── templates/
-    └── index.html          # Main app layout
+    └── index.html          # Main app layout with full ARIA support
 ```
 
 ## 🏆 Built For
