@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoteDost - Your Indian Election Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
@@ -13,45 +15,364 @@
     <div id="canvas-container"></div>
     
     <div class="app-container">
-        <header>
+        <!-- Sidebar -->
+        <aside class="sidebar">
             <div class="logo">
                 <span class="icon">🗳️</span>
                 <h1>VoteDost</h1>
             </div>
-            <p class="tagline">Your friendly guide to Indian elections</p>
             
-            <div class="suggested-chips">
-                <button class="chip" onclick="sendSuggested('How do I register to vote?')">How do I register to vote?</button>
-                <button class="chip" onclick="sendSuggested('What is EVM?')">What is EVM?</button>
-                <button class="chip" onclick="sendSuggested('Who can contest elections?')">Who can contest elections?</button>
-                <button class="chip" onclick="sendSuggested('What is Model Code of Conduct?')">What is Model Code of Conduct?</button>
-            </div>
-        </header>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-target="panel-chat">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    Chat
+                </a>
+                <a href="#" class="nav-item" data-target="panel-guide">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    Election Guide
+                </a>
+                <a href="#" class="nav-item" data-target="panel-timeline">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Timeline
+                </a>
+                <a href="#" class="nav-item" data-target="panel-faqs">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    FAQs
+                </a>
+            </nav>
 
-        <main class="chat-container">
-            <div id="chat-messages" class="messages-area">
-                <div class="message bot-message">
-                    <div class="avatar">🤖</div>
-                    <div class="content">Namaste! I am VoteDost. How can I help you with the Indian elections today?</div>
+            <div class="quick-questions">
+                <h3>Quick Questions</h3>
+                <div class="suggested-chips">
+                    <button class="chip" onclick="sendSuggested('How do I register to vote?')">How to register?</button>
+                    <button class="chip" onclick="sendSuggested('What is EVM?')">What is EVM?</button>
+                    <button class="chip" onclick="sendSuggested('Who can contest elections?')">Who can contest?</button>
+                    <button class="chip" onclick="sendSuggested('What is Model Code of Conduct?')">Model Code of Conduct</button>
                 </div>
             </div>
-            
-            <div class="typing-indicator hidden" id="typing-indicator">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
-        </main>
 
-        <footer class="input-area">
-            <form id="chat-form">
-                <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off" required>
-                <button type="submit" id="send-btn">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                </button>
-            </form>
-        </footer>
+            <div class="powered-by">
+                <span>Powered by</span>
+                <span class="badge">
+                    <span class="g-blue">G</span><span class="g-red">o</span><span class="g-yellow">o</span><span class="g-blue">g</span><span class="g-green">l</span><span class="g-red">e</span> 
+                    <span class="gemini-text">Gemini</span>
+                </span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="topbar">
+                <h2>Election Assistant</h2>
+                <div class="topbar-right">
+                    <div class="lang-selector-container">
+                        <select id="language-selector" class="lang-selector">
+                            <option value="English">English</option>
+                            <option value="Hindi">हिंदी</option>
+                            <option value="Tamil">தமிழ்</option>
+                            <option value="Telugu">తెలుగు</option>
+                            <option value="Kannada">ಕನ್ನಡ</option>
+                            <option value="Bengali">বাংলা</option>
+                            <option value="Marathi">मराठी</option>
+                        </select>
+                    </div>
+                    <div class="live-indicator">
+                        <span class="live-dot"></span>
+                        Live
+                    </div>
+                </div>
+            </header>
+
+            <div class="panels-wrapper">
+                
+                <!-- CHAT PANEL -->
+                <div id="panel-chat" class="panel active">
+                    <main class="chat-container">
+                        <div id="chat-messages" class="messages-area">
+                            <div class="message bot-message">
+                                <div class="avatar bot-avatar">🗳️</div>
+                                <div class="content">Namaste! I am VoteDost. How can I help you with the Indian elections today?</div>
+                            </div>
+                        </div>
+                        
+                        <div class="typing-indicator hidden" id="typing-indicator">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </main>
+
+                    <footer class="input-area">
+                        <div class="autocomplete-container">
+                            <div id="autocomplete-dropdown" class="autocomplete-dropdown hidden"></div>
+                        </div>
+                        <form id="chat-form">
+                            <input type="text" id="user-input" placeholder="Ask about elections..." autocomplete="off" required>
+                            <button type="submit" id="send-btn">
+                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                            </button>
+                        </form>
+                    </footer>
+                </div>
+
+                <!-- ELECTION GUIDE PANEL -->
+                <div id="panel-guide" class="panel hidden">
+                    <div class="panel-header">
+                        <h2>Election Guide</h2>
+                        <p>Essential information about the Indian electoral process.</p>
+                    </div>
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <div class="guide-icon">🏛️</div>
+                            <h3>What is ECI</h3>
+                            <p>The Election Commission of India is an autonomous constitutional authority responsible for administering election processes in India.</p>
+                        </div>
+                        <div class="guide-card">
+                            <div class="guide-icon">✅</div>
+                            <h3>Voter Eligibility</h3>
+                            <p>You must be an Indian citizen, 18 years or older as of January 1st, and registered as a voter in your constituency.</p>
+                        </div>
+                        <div class="guide-card">
+                            <div class="guide-icon">🪪</div>
+                            <h3>How to get Voter ID</h3>
+                            <p>Fill Form 6 online at nvsp.in or offline with address and age proof to register and obtain your Voter ID card.</p>
+                        </div>
+                        <div class="guide-card">
+                            <div class="guide-icon">👨‍💼</div>
+                            <h3>Candidate Eligibility</h3>
+                            <p>Must be an Indian citizen, at least 25 years old (for Lok Sabha), a registered voter, and have no serious criminal convictions.</p>
+                        </div>
+                        <div class="guide-card">
+                            <div class="guide-icon">⚖️</div>
+                            <h3>Model Code of Conduct</h3>
+                            <p>Guidelines issued by ECI for political parties and candidates during elections to maintain a level playing field and fair practice.</p>
+                        </div>
+                        <div class="guide-card">
+                            <div class="guide-icon">📠</div>
+                            <h3>What is EVM</h3>
+                            <p>Electronic Voting Machines are used to record votes electronically, ensuring a secure, transparent, and quick polling process.</p>
+                        </div>
+                        <div class="guide-card">
+                            <div class="guide-icon">🧾</div>
+                            <h3>What is VVPAT</h3>
+                            <p>Voter Verifiable Paper Audit Trail allows voters to verify that their vote was cast correctly by printing a paper slip.</p>
+                        </div>
+                        <div class="guide-card">
+                            <div class="guide-icon">❌</div>
+                            <h3>Right to NOTA</h3>
+                            <p>None Of The Above is an option allowing voters to officially register a vote of rejection for all contesting candidates.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TIMELINE PANEL -->
+                <div id="panel-timeline" class="panel hidden">
+                    <div class="panel-header">
+                        <h2>Election Timeline</h2>
+                        <p>The step-by-step journey of an Indian election.</p>
+                    </div>
+                    <div class="timeline-container">
+                        <div class="timeline-line"></div>
+                        
+                        <div class="timeline-step">
+                            <div class="timeline-dot">1</div>
+                            <div class="timeline-content">
+                                <h3>Election Announcement 🗓️</h3>
+                                <p>Election Commission announces election dates and schedule</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">2</div>
+                            <div class="timeline-content">
+                                <h3>Model Code of Conduct Begins ⚖️</h3>
+                                <p>MCC comes into force immediately after announcement</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">3</div>
+                            <div class="timeline-content">
+                                <h3>Voter List Finalization 📋</h3>
+                                <p>Final electoral rolls are published and corrections accepted</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">4</div>
+                            <div class="timeline-content">
+                                <h3>Nomination Filing 📝</h3>
+                                <p>Candidates file nomination papers with returning officer</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">5</div>
+                            <div class="timeline-content">
+                                <h3>Scrutiny of Nominations 🔍</h3>
+                                <p>Returning officer verifies all nomination papers</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">6</div>
+                            <div class="timeline-content">
+                                <h3>Withdrawal of Candidature 🚪</h3>
+                                <p>Last date for candidates to withdraw from the election</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">7</div>
+                            <div class="timeline-content">
+                                <h3>Campaign Period 📣</h3>
+                                <p>Political parties and candidates campaign across constituencies</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">8</div>
+                            <div class="timeline-content">
+                                <h3>Campaign Silence Period 🤫</h3>
+                                <p>48 hours before polling, all campaigning must stop</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">9</div>
+                            <div class="timeline-content">
+                                <h3>Polling Day 🗳️</h3>
+                                <p>Citizens cast their votes at designated polling booths</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">10</div>
+                            <div class="timeline-content">
+                                <h3>Counting of Votes 🔢</h3>
+                                <p>Votes are counted under strict supervision</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot">11</div>
+                            <div class="timeline-content">
+                                <h3>Results & Declaration 🏆</h3>
+                                <p>Winners declared, new government formation begins</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQs PANEL -->
+                <div id="panel-faqs" class="panel hidden">
+                    <div class="panel-header">
+                        <h2>Frequently Asked Questions</h2>
+                        <p>Common questions about voting in India.</p>
+                    </div>
+                    <div class="faqs-container">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>How do I register to vote?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Visit the National Voters Service Portal (nvsp.in) or your nearest Electoral Registration Office. Fill Form 6 with your Aadhaar, age proof, and address proof. You can also register through the Voter Helpline App.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What ID can I use at the polling booth?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>While Voter ID (EPIC) is primary, ECI also accepts Aadhaar card, PAN card, Passport, Driving License, MNREGA Job Card, bank/post office passbook with photo, or any government-issued photo ID.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What is NOTA?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>NOTA stands for None of the Above. If you find no candidate suitable, you can press the NOTA button on the EVM. Your vote is counted but does not go to any candidate.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Can I vote if my name is not on the voter list?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>No. Your name must be on the electoral roll of your constituency. You can check at electoralsearch.eci.gov.in or the Voter Helpline App.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What is the minimum age to vote?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>18 years as of January 1st of the year the electoral roll is revised.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Can I vote from any booth?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>No. You must vote at the specific polling booth assigned to your address as per the voter list.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What happens if someone offers me money for my vote?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>It is illegal. Report it immediately to the ECI via the cVIGIL app or call 1950 (Voter Helpline).</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What is the difference between Lok Sabha and Vidhan Sabha elections?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Lok Sabha is the national parliament election held every 5 years. Vidhan Sabha is the state legislative assembly election. Both use the same EVM-based voting process.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>How do I check my name on the voter list?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Visit electoralsearch.eci.gov.in, enter your details, and check your registration status.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>What is Model Code of Conduct?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>MCC is a set of guidelines by ECI that political parties and candidates must follow from election announcement until results. It ensures free and fair elections.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="mobile-nav">
+        <a href="#" class="nav-item active" data-target="panel-chat">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </a>
+        <a href="#" class="nav-item" data-target="panel-guide">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        </a>
+        <a href="#" class="nav-item" data-target="panel-timeline">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </a>
+        <a href="#" class="nav-item" data-target="panel-faqs">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </a>
+    </nav>
 
     <script src="/static/script.js"></script>
 </body>

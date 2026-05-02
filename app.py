@@ -52,6 +52,7 @@ def chat():
     
     user_message = data["message"]
     history = data.get("history", []) # List of dicts: {"role": "user"|"assistant", "content": "..."}
+    language = data.get("language", "English")
 
     try:
         formatted_history = []
@@ -60,7 +61,10 @@ def chat():
             formatted_history.append(Content(role=role, parts=[Part.from_text(msg["content"])]))
             
         chat_session = model.start_chat(history=formatted_history)
-        response = chat_session.send_message(user_message)
+        
+        # Prepend the language instruction dynamically to the user's message
+        enhanced_message = f"[{language} language requested] {user_message}"
+        response = chat_session.send_message(enhanced_message)
         
         return jsonify({
             "response": response.text
