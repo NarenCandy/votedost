@@ -203,16 +203,18 @@ The goal was to build an app that feels like a **funded product** while staying 
 3. Access your live URL from Cloud Run dashboard
 
 ## 📁 Project Structure
+```
 votedost/
-├── app.py              # Flask backend + Vertex AI integration
-├── requirements.txt    # Python dependencies
-├── Dockerfile          # Container configuration
-├── .dockerignore       # Docker ignore rules
+├── app.py                  # Flask backend + Vertex AI integration
+├── requirements.txt        # Python dependencies
+├── Dockerfile              # Container configuration
+├── .dockerignore           # Docker ignore rules
 ├── static/
-│   ├── style.css       # All styling + animations
-│   └── script.js       # Frontend logic + Three.js + GSAP
+│   ├── style.css           # All styling + animations
+│   └── script.js           # Frontend logic + Three.js + GSAP
 └── templates/
-└── index.html      # Main app layout
+    └── index.html          # Main app layout
+```
 
 ## 🏆 Built For
 **PromptWars: Virtual — Challenge 2**
