@@ -1,0 +1,17 @@
+{
+  "name": "VoteDost - Indian Election Assistant",
+  "short_name": "VoteDost",
+  "description": "AI-powered Indian Election Assistant",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050508",
+  "theme_color": "#7c3aed",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/fluency/512/ballot-box.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

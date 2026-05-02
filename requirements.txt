@@ -2,3 +2,7 @@ flask
 gunicorn
 google-cloud-aiplatform
 vertexai
+google-cloud-logging
+google-cloud-monitoring
+pytest
+pytest-cov

@@ -3,51 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- SEO Meta Tags -->
     <title>VoteDost - Your Indian Election Assistant</title>
+    <meta name="description" content="VoteDost is an AI-powered assistant helping Indian citizens navigate the election process, voter registration, and polling information.">
+    <meta name="keywords" content="Indian Elections, ECI, Voter ID, Polling Booth, EVM, VVPAT, VoteDost, Election Assistant">
+    <meta name="author" content="VoteDost Team">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="VoteDost - Your Indian Election Assistant">
+    <meta property="og:description" content="Get instant help with Indian election processes, voter registration, and more.">
+    <meta property="og:image" content="/static/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="VoteDost - Your Indian Election Assistant">
+    <meta property="twitter:description" content="Get instant help with Indian election processes, voter registration, and more.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="manifest" href="/static/manifest.json">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
-    <div id="canvas-container"></div>
+    <!-- Skip Navigation -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="canvas-container" aria-hidden="true" role="presentation"></div>
     
     <div class="app-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <span class="icon">🗳️</span>
+        <aside class="sidebar" aria-label="Application navigation">
+            <div class="logo" role="banner">
+                <span class="icon" aria-hidden="true">🗳️</span>
                 <h1>VoteDost</h1>
             </div>
             
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item active" data-target="panel-chat">
-                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <nav class="sidebar-nav" role="navigation" aria-label="Main menu">
+                <a href="#" class="nav-item active" data-target="panel-chat" aria-current="page" aria-label="Open chat assistant" role="menuitem">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                     Chat
                 </a>
-                <a href="#" class="nav-item" data-target="panel-guide">
-                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <a href="#" class="nav-item" data-target="panel-guide" aria-label="Open election guide" role="menuitem">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                     Election Guide
                 </a>
-                <a href="#" class="nav-item" data-target="panel-timeline">
-                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <a href="#" class="nav-item" data-target="panel-timeline" aria-label="Open election timeline" role="menuitem">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                     Timeline
                 </a>
-                <a href="#" class="nav-item" data-target="panel-faqs">
-                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <a href="#" class="nav-item" data-target="panel-faqs" aria-label="Open frequently asked questions" role="menuitem">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                     FAQs
                 </a>
             </nav>
 
-            <div class="quick-questions">
-                <h3>Quick Questions</h3>
+            <div class="quick-questions" aria-labelledby="quick-questions-title">
+                <h3 id="quick-questions-title">Quick Questions</h3>
                 <div class="suggested-chips">
-                    <button class="chip" onclick="sendSuggested('How do I register to vote?')">How to register?</button>
-                    <button class="chip" onclick="sendSuggested('What is EVM?')">What is EVM?</button>
-                    <button class="chip" onclick="sendSuggested('Who can contest elections?')">Who can contest?</button>
-                    <button class="chip" onclick="sendSuggested('What is Model Code of Conduct?')">Model Code of Conduct</button>
+                    <button class="chip" onclick="sendSuggested('How do I register to vote?')" aria-label="Ask: How do I register to vote?">How to register?</button>
+                    <button class="chip" onclick="sendSuggested('What is EVM?')" aria-label="Ask: What is EVM?">What is EVM?</button>
+                    <button class="chip" onclick="sendSuggested('Who can contest elections?')" aria-label="Ask: Who can contest elections?">Who can contest?</button>
+                    <button class="chip" onclick="sendSuggested('What is Model Code of Conduct?')" aria-label="Ask: What is Model Code of Conduct?">Model Code of Conduct</button>
                 </div>
             </div>
 
@@ -61,12 +83,13 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="main-content">
-            <header class="topbar">
+        <div class="main-content" id="main-content" role="main">
+            <header class="topbar" role="banner">
                 <h2>Election Assistant</h2>
                 <div class="topbar-right">
                     <div class="lang-selector-container">
-                        <select id="language-selector" class="lang-selector">
+                        <label for="language-selector" class="sr-only">Choose response language</label>
+                        <select id="language-selector" class="lang-selector" aria-label="Choose response language">
                             <option value="English">English</option>
                             <option value="Hindi">हिंदी</option>
                             <option value="Tamil">தமிழ்</option>
@@ -76,8 +99,8 @@
                             <option value="Marathi">मराठी</option>
                         </select>
                     </div>
-                    <div class="live-indicator">
-                        <span class="live-dot"></span>
+                    <div class="live-indicator" aria-live="polite" aria-atomic="true">
+                        <span class="live-dot" aria-hidden="true"></span>
                         Live
                     </div>
                 </div>
@@ -86,16 +109,16 @@
             <div class="panels-wrapper">
                 
                 <!-- CHAT PANEL -->
-                <div id="panel-chat" class="panel active">
+                <div id="panel-chat" class="panel active" role="region" aria-label="Chat interface" aria-live="polite">
                     <main class="chat-container">
-                        <div id="chat-messages" class="messages-area">
-                            <div class="message bot-message">
-                                <div class="avatar bot-avatar">🗳️</div>
+                        <div id="chat-messages" class="messages-area" role="log" aria-live="polite" aria-relevant="additions" aria-label="Conversation history">
+                            <div class="message bot-message" role="article" aria-label="VoteDost response">
+                                <div class="avatar bot-avatar" aria-hidden="true">🗳️</div>
                                 <div class="content">Namaste! I am VoteDost. How can I help you with the Indian elections today?</div>
                             </div>
                         </div>
                         
-                        <div class="typing-indicator hidden" id="typing-indicator">
+                        <div class="typing-indicator hidden" id="typing-indicator" aria-label="VoteDost is preparing a response" aria-live="polite">
                             <div class="dot"></div>
                             <div class="dot"></div>
                             <div class="dot"></div>
@@ -104,148 +127,149 @@
 
                     <footer class="input-area">
                         <div class="autocomplete-container">
-                            <div id="autocomplete-dropdown" class="autocomplete-dropdown hidden"></div>
+                            <div id="autocomplete-dropdown" class="autocomplete-dropdown hidden" role="listbox" aria-label="Suggested questions"></div>
                         </div>
-                        <form id="chat-form">
-                            <input type="text" id="user-input" placeholder="Ask about elections..." autocomplete="off" required>
-                            <button type="submit" id="send-btn">
-                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        <form id="chat-form" aria-label="Message input form" novalidate>
+                            <input type="text" id="user-input" placeholder="Ask about elections..." autocomplete="off" required aria-label="Type your election question" aria-describedby="input-hint" aria-required="true" aria-autocomplete="list">
+                            <button type="submit" id="send-btn" aria-label="Send message">
+                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                             </button>
+                            <span id="input-hint" class="sr-only">Press Enter or click Send to submit your question</span>
                         </form>
                     </footer>
                 </div>
 
                 <!-- ELECTION GUIDE PANEL -->
-                <div id="panel-guide" class="panel hidden">
+                <div id="panel-guide" class="panel hidden" role="region" aria-label="Election guide information">
                     <div class="panel-header">
                         <h2>Election Guide</h2>
                         <p>Essential information about the Indian electoral process.</p>
                     </div>
                     <div class="guide-grid">
-                        <div class="guide-card">
-                            <div class="guide-icon">🏛️</div>
-                            <h3>What is ECI</h3>
+                        <div class="guide-card" role="article" aria-labelledby="guide-title-1">
+                            <div class="guide-icon" aria-hidden="true">🏛️</div>
+                            <h3 id="guide-title-1">What is ECI</h3>
                             <p>The Election Commission of India is an autonomous constitutional authority responsible for administering election processes in India.</p>
                         </div>
-                        <div class="guide-card">
-                            <div class="guide-icon">✅</div>
-                            <h3>Voter Eligibility</h3>
+                        <div class="guide-card" role="article" aria-labelledby="guide-title-2">
+                            <div class="guide-icon" aria-hidden="true">✅</div>
+                            <h3 id="guide-title-2">Voter Eligibility</h3>
                             <p>You must be an Indian citizen, 18 years or older as of January 1st, and registered as a voter in your constituency.</p>
                         </div>
-                        <div class="guide-card">
-                            <div class="guide-icon">🪪</div>
-                            <h3>How to get Voter ID</h3>
+                        <div class="guide-card" role="article" aria-labelledby="guide-title-3">
+                            <div class="guide-icon" aria-hidden="true">🪪</div>
+                            <h3 id="guide-title-3">How to get Voter ID</h3>
                             <p>Fill Form 6 online at nvsp.in or offline with address and age proof to register and obtain your Voter ID card.</p>
                         </div>
-                        <div class="guide-card">
-                            <div class="guide-icon">👨‍💼</div>
-                            <h3>Candidate Eligibility</h3>
+                        <div class="guide-card" role="article" aria-labelledby="guide-title-4">
+                            <div class="guide-icon" aria-hidden="true">👨‍💼</div>
+                            <h3 id="guide-title-4">Candidate Eligibility</h3>
                             <p>Must be an Indian citizen, at least 25 years old (for Lok Sabha), a registered voter, and have no serious criminal convictions.</p>
                         </div>
-                        <div class="guide-card">
-                            <div class="guide-icon">⚖️</div>
-                            <h3>Model Code of Conduct</h3>
+                        <div class="guide-card" role="article" aria-labelledby="guide-title-5">
+                            <div class="guide-icon" aria-hidden="true">⚖️</div>
+                            <h3 id="guide-title-5">Model Code of Conduct</h3>
                             <p>Guidelines issued by ECI for political parties and candidates during elections to maintain a level playing field and fair practice.</p>
                         </div>
-                        <div class="guide-card">
-                            <div class="guide-icon">📠</div>
-                            <h3>What is EVM</h3>
+                        <div class="guide-card" role="article" aria-labelledby="guide-title-6">
+                            <div class="guide-icon" aria-hidden="true">📠</div>
+                            <h3 id="guide-title-6">What is EVM</h3>
                             <p>Electronic Voting Machines are used to record votes electronically, ensuring a secure, transparent, and quick polling process.</p>
                         </div>
-                        <div class="guide-card">
-                            <div class="guide-icon">🧾</div>
-                            <h3>What is VVPAT</h3>
+                        <div class="guide-card" role="article" aria-labelledby="guide-title-7">
+                            <div class="guide-icon" aria-hidden="true">🧾</div>
+                            <h3 id="guide-title-7">What is VVPAT</h3>
                             <p>Voter Verifiable Paper Audit Trail allows voters to verify that their vote was cast correctly by printing a paper slip.</p>
                         </div>
-                        <div class="guide-card">
-                            <div class="guide-icon">❌</div>
-                            <h3>Right to NOTA</h3>
+                        <div class="guide-card" role="article" aria-labelledby="guide-title-8">
+                            <div class="guide-icon" aria-hidden="true">❌</div>
+                            <h3 id="guide-title-8">Right to NOTA</h3>
                             <p>None Of The Above is an option allowing voters to officially register a vote of rejection for all contesting candidates.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- TIMELINE PANEL -->
-                <div id="panel-timeline" class="panel hidden">
+                <div id="panel-timeline" class="panel hidden" role="region" aria-label="Election process timeline">
                     <div class="panel-header">
                         <h2>Election Timeline</h2>
                         <p>The step-by-step journey of an Indian election.</p>
                     </div>
-                    <div class="timeline-container">
+                    <div class="timeline-container" role="list" aria-label="Election process steps">
                         <div class="timeline-line"></div>
                         
-                        <div class="timeline-step">
-                            <div class="timeline-dot">1</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 1: Election Announcement">1</div>
                             <div class="timeline-content">
                                 <h3>Election Announcement 🗓️</h3>
                                 <p>Election Commission announces election dates and schedule</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">2</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 2: Model Code of Conduct Begins">2</div>
                             <div class="timeline-content">
                                 <h3>Model Code of Conduct Begins ⚖️</h3>
                                 <p>MCC comes into force immediately after announcement</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">3</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 3: Voter List Finalization">3</div>
                             <div class="timeline-content">
                                 <h3>Voter List Finalization 📋</h3>
                                 <p>Final electoral rolls are published and corrections accepted</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">4</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 4: Nomination Filing">4</div>
                             <div class="timeline-content">
                                 <h3>Nomination Filing 📝</h3>
                                 <p>Candidates file nomination papers with returning officer</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">5</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 5: Scrutiny of Nominations">5</div>
                             <div class="timeline-content">
                                 <h3>Scrutiny of Nominations 🔍</h3>
                                 <p>Returning officer verifies all nomination papers</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">6</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 6: Withdrawal of Candidature">6</div>
                             <div class="timeline-content">
                                 <h3>Withdrawal of Candidature 🚪</h3>
                                 <p>Last date for candidates to withdraw from the election</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">7</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 7: Campaign Period">7</div>
                             <div class="timeline-content">
                                 <h3>Campaign Period 📣</h3>
                                 <p>Political parties and candidates campaign across constituencies</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">8</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 8: Campaign Silence Period">8</div>
                             <div class="timeline-content">
                                 <h3>Campaign Silence Period 🤫</h3>
                                 <p>48 hours before polling, all campaigning must stop</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">9</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 9: Polling Day">9</div>
                             <div class="timeline-content">
                                 <h3>Polling Day 🗳️</h3>
                                 <p>Citizens cast their votes at designated polling booths</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">10</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 10: Counting of Votes">10</div>
                             <div class="timeline-content">
                                 <h3>Counting of Votes 🔢</h3>
                                 <p>Votes are counted under strict supervision</p>
                             </div>
                         </div>
-                        <div class="timeline-step">
-                            <div class="timeline-dot">11</div>
+                        <div class="timeline-step" role="listitem">
+                            <div class="timeline-dot" aria-label="Step 11: Results & Declaration">11</div>
                             <div class="timeline-content">
                                 <h3>Results & Declaration 🏆</h3>
                                 <p>Winners declared, new government formation begins</p>
@@ -255,99 +279,99 @@
                 </div>
 
                 <!-- FAQs PANEL -->
-                <div id="panel-faqs" class="panel hidden">
+                <div id="panel-faqs" class="panel hidden" role="region" aria-label="Frequently asked questions">
                     <div class="panel-header">
                         <h2>Frequently Asked Questions</h2>
                         <p>Common questions about voting in India.</p>
                     </div>
-                    <div class="faqs-container">
-                        <div class="faq-item">
-                            <div class="faq-question">
+                    <div class="faqs-container" role="list">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-1">
                                 <span>How do I register to vote?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-1" role="region">
                                 <p>Visit the National Voters Service Portal (nvsp.in) or your nearest Electoral Registration Office. Fill Form 6 with your Aadhaar, age proof, and address proof. You can also register through the Voter Helpline App.</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-2">
                                 <span>What ID can I use at the polling booth?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-2" role="region">
                                 <p>While Voter ID (EPIC) is primary, ECI also accepts Aadhaar card, PAN card, Passport, Driving License, MNREGA Job Card, bank/post office passbook with photo, or any government-issued photo ID.</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-3">
                                 <span>What is NOTA?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-3" role="region">
                                 <p>NOTA stands for None of the Above. If you find no candidate suitable, you can press the NOTA button on the EVM. Your vote is counted but does not go to any candidate.</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-4">
                                 <span>Can I vote if my name is not on the voter list?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-4" role="region">
                                 <p>No. Your name must be on the electoral roll of your constituency. You can check at electoralsearch.eci.gov.in or the Voter Helpline App.</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-5">
                                 <span>What is the minimum age to vote?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-5" role="region">
                                 <p>18 years as of January 1st of the year the electoral roll is revised.</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-6">
                                 <span>Can I vote from any booth?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-6" role="region">
                                 <p>No. You must vote at the specific polling booth assigned to your address as per the voter list.</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-7">
                                 <span>What happens if someone offers me money for my vote?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-7" role="region">
                                 <p>It is illegal. Report it immediately to the ECI via the cVIGIL app or call 1950 (Voter Helpline).</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-8">
                                 <span>What is the difference between Lok Sabha and Vidhan Sabha elections?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-8" role="region">
                                 <p>Lok Sabha is the national parliament election held every 5 years. Vidhan Sabha is the state legislative assembly election. Both use the same EVM-based voting process.</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-9">
                                 <span>How do I check my name on the voter list?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-9" role="region">
                                 <p>Visit electoralsearch.eci.gov.in, enter your details, and check your registration status.</p>
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-10">
                                 <span>What is Model Code of Conduct?</span>
-                                <span class="faq-icon">+</span>
-                            </div>
-                            <div class="faq-answer">
+                                <span class="faq-icon" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-10" role="region">
                                 <p>MCC is a set of guidelines by ECI that political parties and candidates must follow from election announcement until results. It ensures free and fair elections.</p>
                             </div>
                         </div>
@@ -359,18 +383,18 @@
     </div>
 
     <!-- Mobile Bottom Nav -->
-    <nav class="mobile-nav">
-        <a href="#" class="nav-item active" data-target="panel-chat">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation menu">
+        <a href="#" class="nav-item active" data-target="panel-chat" aria-label="Open chat">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
         </a>
-        <a href="#" class="nav-item" data-target="panel-guide">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <a href="#" class="nav-item" data-target="panel-guide" aria-label="Open guide">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         </a>
-        <a href="#" class="nav-item" data-target="panel-timeline">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <a href="#" class="nav-item" data-target="panel-timeline" aria-label="Open timeline">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
         </a>
-        <a href="#" class="nav-item" data-target="panel-faqs">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <a href="#" class="nav-item" data-target="panel-faqs" aria-label="Open FAQs">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
         </a>
     </nav>
 

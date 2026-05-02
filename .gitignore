@@ -20,10 +20,16 @@ venv.bak/
 *.json
 !package.json
 !package-lock.json
+!static/manifest.json
 
 # Logs
 *.log
 logs/
+
+# Test artifacts
+.coverage
+.pytest_cache/
+htmlcov/
 
 # IDE / OS specific
 .vscode/
