@@ -1,53 +1,190 @@
-# VoteDost - Your Indian Election Assistant
+# 🗳️ VoteDost - Your Indian Election Assistant
 
-VoteDost is a smart, dynamic, and interactive election assistant designed for the **Virtual Prompt Wars Challenge 2**. It helps Indian citizens navigate the complexities of the electoral process by providing reliable information on voter registration, candidate eligibility, EVMs, timelines, and more.
+> *"Dost" means Friend in Hindi — VoteDost is every Indian voter's friendly guide to elections.*
+
+VoteDost is a smart, dynamic, and interactive AI-powered election assistant designed for the **Virtual Prompt Wars Challenge 2**. It helps Indian citizens navigate the complexities of the electoral process through conversational AI, structured content panels, and a premium modern interface.
 
 ## 🌐 Live Demo
 👉 [https://votedost-864461954747.us-central1.run.app](https://votedost-864461954747.us-central1.run.app)
 
-## ✨ Features
-- 🤖 AI-powered election Q&A via Google Vertex AI (Gemini 2.5 Flash)
-- 🌐 7 Indian language support (English, Hindi, Tamil, Telugu, Kannada, Bengali, Marathi) with auto-detection
-- 📚 Election Guide with key laws, voter rights and ECI info
-- 🗓️ Visual step-by-step Indian election process timeline
-- ❓ Interactive FAQ accordion with 10 common questions
-- 🔍 Smart autocomplete suggestions as you type
-- 📱 Fully mobile responsive with bottom navigation
-- ✨ Premium glassmorphism UI with Three.js WebGL particle background
-- 🎨 Smooth GSAP animations throughout
+## ✨ Complete Feature List
+
+### 🤖 AI Chat Assistant
+- Powered by **Google Vertex AI (Gemini 2.5 Flash)**
+- Conversational multi-turn chat with full history context
+- Custom system prompt designed specifically for Indian election knowledge
+- Covers: voter registration, ECI, EVMs, VVPAT, NOTA, MCC, candidate eligibility, and more
+- Gracefully rejects off-topic questions and stays focused on elections
+
+### 🌐 Multi-Language Support
+- **7 Indian languages supported:** English, Hindi (हिंदी), Tamil (தமிழ்), Telugu (తెలుగు), Kannada (ಕನ್ನಡ), Bengali (বাংলা), Marathi (मराठी)
+- **Auto-language detection** — responds in the language the user types in
+- Manual language selector dropdown in the topbar
+- Selected language dynamically injected into Gemini system prompt for accurate responses
+- Input placeholder text updates to match selected language
+
+### 📚 Election Guide Panel
+- Dedicated browsable panel with 8 information cards
+- Covers: ECI overview, voter eligibility, how to get Voter ID, candidate eligibility, Model Code of Conduct, EVM explanation, VVPAT, and Right to NOTA
+- 2-column card grid on desktop, 1-column on mobile
+- Each card has icon, bold title, and clear description
+
+### 🗓️ Election Timeline Panel
+- Beautiful **visual vertical timeline** of the complete Indian election process
+- 11 steps from Election Announcement to Results & Declaration
+- Alternating left/right cards on desktop, left-aligned on mobile
+- Each step has numbered gradient circle, icon, title and description
+- Animated with **GSAP** slide-in effect when panel opens
+- Steps covered:
+  1. Election Announcement
+  2. Model Code of Conduct Begins
+  3. Voter List Finalization
+  4. Nomination Filing
+  5. Scrutiny of Nominations
+  6. Withdrawal of Candidature
+  7. Campaign Period
+  8. Campaign Silence Period
+  9. Polling Day
+  10. Counting of Votes
+  11. Results & Declaration
+
+### ❓ Interactive FAQ Panel
+- **10 frequently asked questions** in accordion style
+- Smooth expand/collapse animation
+- Only one question open at a time
+- Active question highlighted in accent color
+- Questions covered:
+  - How to register to vote
+  - Valid IDs at polling booth
+  - What is NOTA
+  - Voting without name on list
+  - Minimum voting age
+  - Booth assignment rules
+  - Vote bribery reporting
+  - Lok Sabha vs Vidhan Sabha difference
+  - How to check voter list
+  - What is Model Code of Conduct
+
+### 🔍 Smart Autocomplete
+- 12 predefined election-related suggestions
+- Filters in real time as user types (case insensitive)
+- Shows maximum 4 matching suggestions at a time
+- Matching text highlighted in accent color
+- Click to fill input, Escape to dismiss
+- Glassmorphism styled dropdown matching app theme
+
+### 🎨 Premium UI Design
+- **Deep space dark theme** (#050508 near-black background)
+- **Glassmorphism** chat container with frosted glass effect
+- **Rich color palette:** deep violet (#7c3aed) + electric blue (#2563eb) + gold (#f59e0b) accents
+- **Plus Jakarta Sans** typography throughout
+- User avatar with gradient initial letter circle
+- Bot avatar with gradient square and election icon
+- Subtle 3px left border accent on bot messages
+- Gold shimmer effect on send button hover
+- Live pulsing green status indicator in topbar
+- Language auto-detect badge in topbar
+- "Powered by Gemini" badge with Google colors in sidebar
+
+### ✨ Animations & Effects
+- **Three.js WebGL particle background** with 300 particles
+  - 70% deep violet particles, 30% gold particles
+  - Varying particle sizes for depth effect
+  - Constellation-style connecting lines (opacity 0.06)
+  - Mouse cursor tracking and rotation
+  - Optimized with custom ShaderMaterial for smooth performance
+- **GSAP animations** on all chat messages (slide-in from bottom)
+- GSAP timeline panel card animations
+- Smooth FAQ accordion expand/collapse
+- Typing indicator with 3 bouncing dots while AI responds
+- Chip hover lift effect
+- Send button scale animation on click
+
+### 🧭 Navigation
+- **Desktop:** Left sidebar (220px) with:
+  - VoteDost logo and gradient title
+  - Nav items: Chat, Election Guide, Timeline, FAQs
+  - Quick Questions chips section
+  - Powered by Gemini badge at bottom
+- **Mobile:** Fixed bottom navigation bar with icons for all 4 sections
+- Active nav item highlighted with accent color
+- Smooth panel switching — only one view visible at a time
+
+### 📱 Mobile Responsive
+- Sidebar hidden on mobile, replaced with bottom nav bar
+- Bottom nav uses `dvh` (dynamic viewport height) for Chrome mobile compatibility
+- Safe area insets for iPhone notch and Android gesture navigation
+- Chat bubbles expand to 90% width on mobile
+- FAQ accordion touch-friendly
+- Timeline switches to left-aligned single column on mobile
+- Language selector accessible on mobile
+- All content panels properly padded above bottom nav bar
+
+### 🔒 Security & Performance
+- Zero hardcoded API keys
+- Google Application Default Credentials for secure Vertex AI access
+- Environment variable based configuration
+- Lightweight frontend — no heavy frameworks, repo size under 1MB
+- All JS libraries loaded via CDN (zero repo size impact)
+- Markdown rendering for bot responses (bold, italic, lists)
+- Graceful error handling throughout
 
 ## 🎯 Chosen Vertical
 **Civic Technology & Election Assistance**
 
 ## 🧠 Approach and Logic
-The goal was to create an interface that feels highly premium and modern (a "billion-dollar look") while ensuring the application remains lightweight, fast, and accessible.
+The goal was to build an app that feels like a **funded product** while staying lightweight and laser-focused on the problem statement — helping users understand the Indian election process in an interactive and easy-to-follow way.
 
-1. **Intelligent Conversational AI:** The core of the assistant is powered by Google's **Vertex AI (Gemini 2.5 Flash)**. We designed a custom system prompt that instructs the model to act as a friendly, knowledgeable guide for Indian elections.
-2. **Context-Aware Multi-Language Support:** To cater to the diverse linguistic landscape of India, VoteDost supports Auto-Language Detection and allows manual language selection (English, Hindi, Tamil, Telugu, Kannada, Bengali, Marathi). The selected language is dynamically injected into the Gemini prompt via the backend, ensuring accurate localized responses.
-3. **Interactive UI/UX:** Built with a modern glassmorphism aesthetic, integrating a dynamic WebGL particle background using **Three.js** and smooth UI transitions using **GSAP**.
-4. **Structured Content Panels:** Recognizing that users sometimes prefer browsing over chatting, we implemented dedicated content panels (Election Guide Grid, Vertical Timeline, Interactive FAQs) that exist alongside the AI chat.
+1. **Intelligent Conversational AI:** Custom Gemini system prompt tuned specifically for Indian election knowledge. The bot stays on topic, responds in the user's language, and handles multi-turn conversations naturally.
+
+2. **Dual Mode — Chat + Browse:** Not all users want to type questions. The Election Guide, Timeline, and FAQs panels let users browse structured content without chatting, making the app accessible for all types of users.
+
+3. **Language First:** India has 22 official languages. Supporting 7 major ones with both auto-detection and manual selection makes VoteDost genuinely useful for a diverse population.
+
+4. **Premium but Lightweight:** Deep space theme, WebGL particles, GSAP animations — all achieved with pure HTML/CSS/JS and CDN libraries. No React, no bundlers, no bloat.
 
 ## ⚙️ How the Solution Works
-- **Frontend:** Pure HTML, CSS, and vanilla JavaScript. We avoided heavy frontend frameworks to keep the repository size incredibly small (< 1 MB). It utilizes responsive CSS Grid/Flexbox and dynamic DOM manipulation for tab switching, FAQ accordions, and autocomplete suggestions.
-- **Backend:** A lightweight Python **Flask** server handles routing and secure API communication.
-- **Google Services Integration:** The backend seamlessly communicates with **Google Cloud Vertex AI (`gemini-2.5-flash`)** using the official Python SDK. It maintains conversation history to provide contextual, multi-turn responses.
-- **Security:** No hardcoded API keys. The application relies entirely on secure environment variables (`GOOGLE_CLOUD_PROJECT`) and Google Application Default Credentials, ensuring safe and responsible implementation.
-- **Efficiency:** The Three.js particle system uses an optimized custom `ShaderMaterial` to handle 300 varied particles without lagging the browser. External libraries are loaded via CDNs to minimize the repository footprint.
+
+| Layer | Details |
+|-------|---------|
+| Frontend | Pure HTML, CSS, Vanilla JavaScript |
+| Backend | Python Flask |
+| AI Model | Google Vertex AI — Gemini 2.5 Flash |
+| 3D Background | Three.js (WebGL) |
+| Animations | GSAP 3 |
+| Fonts | Plus Jakarta Sans (Google Fonts) |
+| Deployment | Google Cloud Run |
+| Auth | Google Application Default Credentials |
 
 ## 📌 Assumptions Made
-1. **Google Cloud Environment:** It is assumed the user running this app locally has authenticated via `gcloud auth application-default login` and has the Vertex AI API enabled on their specified Google Cloud Project.
-2. **Connectivity:** The app assumes an active internet connection to load CDN resources (Three.js, GSAP, Google Fonts) and communicate with the Vertex AI endpoint.
-3. **Stateless Sessions:** For this MVP, conversation history is stored in the frontend client state (`history` array in JS) rather than a persistent backend database. Refreshing the page clears the chat history.
+1. **Google Cloud Environment:** User running locally has authenticated via `gcloud auth application-default login` and has Vertex AI API enabled on their GCP project.
+2. **Connectivity:** Active internet connection required for CDN resources and Vertex AI API calls.
+3. **Stateless Sessions:** Conversation history stored in frontend JS state. Refreshing the page clears chat history.
+4. **Browser Support:** Web Speech API features (if added) require a modern browser. Core chat functionality works on all browsers.
 
 ## 🚀 Running Locally
-1. Ensure Python 3.9+ is installed.
-2. Install dependencies: `pip install -r requirements.txt`
+1. Ensure Python 3.9+ is installed
+2. Install dependencies:
+```bash
+   pip install -r requirements.txt
+```
 3. Set your Google Cloud Project:
-   - Windows (PowerShell): `$env:GOOGLE_CLOUD_PROJECT="your-project-id"`
-   - Mac/Linux: `export GOOGLE_CLOUD_PROJECT="your-project-id"`
-4. Authenticate with Google Cloud: `gcloud auth application-default login`
-5. Run the server: `python app.py`
-6. Open `http://localhost:8080` in your browser.
+```bash
+   # Windows (PowerShell)
+   $env:GOOGLE_CLOUD_PROJECT="votedost"
+
+   # Mac/Linux
+   export GOOGLE_CLOUD_PROJECT="votedost"
+```
+4. Authenticate with Google Cloud:
+```bash
+   gcloud auth application-default login
+```
+5. Run the server:
+```bash
+   python app.py
+```
+6. Open [http://localhost:8080](http://localhost:8080)
 
 ## ☁️ Deployment (Google Cloud Run)
 1. Build and submit Docker image:
@@ -63,14 +200,20 @@ The goal was to create an interface that feels highly premium and modern (a "bil
      --allow-unauthenticated \
      --set-env-vars GOOGLE_CLOUD_PROJECT=votedost
 ```
+3. Access your live URL from Cloud Run dashboard
 
-## 🛠️ Tech Stack
-| Layer | Technology |
-|-------|-----------|
-| Frontend | HTML, CSS, Vanilla JavaScript |
-| Backend | Python, Flask |
-| AI Model | Google Vertex AI (Gemini 2.5 Flash) |
-| Animations | Three.js, GSAP |
-| Fonts | Plus Jakarta Sans |
-| Deployment | Google Cloud Run |
-| Auth | Google Application Default Credentials |
+## 📁 Project Structure
+votedost/
+├── app.py              # Flask backend + Vertex AI integration
+├── requirements.txt    # Python dependencies
+├── Dockerfile          # Container configuration
+├── .dockerignore       # Docker ignore rules
+├── static/
+│   ├── style.css       # All styling + animations
+│   └── script.js       # Frontend logic + Three.js + GSAP
+└── templates/
+└── index.html      # Main app layout
+
+## 🏆 Built For
+**PromptWars: Virtual — Challenge 2**
+Hack2Skill × Google Cloud
