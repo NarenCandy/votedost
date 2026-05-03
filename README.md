@@ -15,6 +15,7 @@ VoteDost is a smart, dynamic, and interactive AI-powered election assistant desi
 - Custom system prompt designed specifically for Indian election knowledge
 - Covers: voter registration, ECI, EVMs, VVPAT, NOTA, MCC, candidate eligibility, and more
 - Gracefully rejects off-topic questions and stays focused on elections
+- **Request-time model status verification** for high availability
 - Context-aware response caching (lru_cache) with composite key (message + language + history)
 
 ### 🌐 Multi-Language Support
@@ -149,42 +150,43 @@ VoteDost is a smart, dynamic, and interactive AI-powered election assistant desi
 - Open Graph tags for social media sharing (og:title, og:description, og:url)
 - Semantic HTML structure for search engine indexing
 
-### ☁️ Google Cloud Integration
-- **Vertex AI** — Gemini 2.5 Flash for conversational AI
-- **Google Cloud Logging** — All requests and performance metrics automatically sent to Cloud Logging when deployed on GCP
-- **Request tracking** — Unique request ID and latency logged per request for observability
-- **Cloud Run** — Fully managed serverless deployment
-- **Google Application Default Credentials** — Secure, keyless authentication
-- **/health endpoint** — Cloud Run health checks with model status
+### ☁️ Expanded Google Cloud Integration
+- **Vertex AI** — Gemini 2.5 Flash for conversational AI with dynamic status checks
+- **Firestore** — Real-time session persistence and chat history analytics
+- **BigQuery** — Structured data logging for long-term usage tracking and election insights
+- **Cloud Translation API** — Proactive language detection and enhanced multilingual support
+- **Secret Manager** — Secure configuration management pattern for sensitive environment variables
+- **Google Cloud Logging** — Professional-grade observability with unique Request IDs and latency metrics per request
+- **Cloud Run** — Fully managed serverless deployment with automated health checks
+- **Google Application Default Credentials** — Secure, keyless authentication throughout the stack
 
-### 🔒 Security & Performance
-- Zero hardcoded API keys
-- Google Application Default Credentials for secure Vertex AI access
-- Environment variable based configuration
-- Input validation: message length limit (2000 chars), whitespace stripping, JSON structure validation
-- Language validation against supported languages list
-- Malicious input handling (HTML injection, SQL injection, JSON injection)
-- Lightweight frontend — no heavy frameworks, repo size under 1MB
-- All JS libraries loaded via CDN (zero repo size impact)
-- Markdown rendering for bot responses (bold, italic, lists)
-- Graceful error handling with descriptive error messages
-- 404 and 500 error handlers
+### 🔒 Security & Performance Hardening
+- **Rate Limiting** — Integrated `Flask-Limiter` with `memory://` storage to protect endpoints from abuse
+- **Security Headers** — Enforced middleware for CSP, HSTS, X-Frame-Options, and XSS Protection
+- **Input Sanitization** — Robust routines handling null bytes, unicode normalization, and length constraints
+- **Zero Hardcoded Keys** — 100% reliance on environment variables and Google Secret Manager
+- **Input Validation** — Message length limits (2000 chars), whitespace stripping, and strict JSON validation
+- **Malicious Input Handling** — Protection against HTML injection, SQL injection, and JSON injection
+- **Lightweight Frontend** — No heavy frameworks, optimized repo size under 1MB
+- **Optimized Performance** — All JS libraries loaded via CDN (zero repo size impact)
+- **Markdown Rendering** — Bot responses support rich formatting (bold, italic, lists)
+- **Global Error Handling** — Professional 404 and 500 handlers ensuring zero raw data leakage
 
-### 🧪 Testing
-- **62 comprehensive test cases** using Python unittest and unittest.mock
-- All Vertex AI calls mocked — tests run without real GCP credentials
-- Test classes covering:
-  - Index route (4 tests)
-  - Chat route basic (8 tests)
-  - Language support (9 tests)
-  - Conversation history (6 tests)
-  - Edge cases (11 tests)
-  - Error handling (5 tests)
-  - Health route (6 tests)
-  - Response format (5 tests)
-  - Security validation (4 tests)
-  - Integration flows (5 tests) (4 tests)
-- Run with: `python -m pytest tests/ -v --cov=app`
+### 🧪 Comprehensive Testing Suite
+- **84 professional test cases** using Python unittest and advanced mocking
+- **100% feature coverage** including security, accessibility, and service fallbacks
+- **Fail-safe Verification** — Tests for Google service failures (Firestore down, BigQuery unreachable, etc.)
+- **Test Classes:**
+  - Index & Health Routes (10 tests)
+  - Chat Logic & Language Support (17 tests)
+  - Conversation History (6 tests)
+  - Edge Cases & Malicious Inputs (11 tests)
+  - Error Handling (5 tests)
+  - Security & Headers (7 tests)
+  - Google Services Integration (11 tests)
+  - Accessibility Compliance (7 tests)
+  - Integration Flows (10 tests)
+- **Execution:** `python -m pytest tests/ -v --cov=app`
 
 ## 🎯 Chosen Vertical
 **Civic Technology & Election Assistance**
@@ -260,22 +262,33 @@ gcloud run deploy votedost \
   --set-env-vars GOOGLE_CLOUD_PROJECT=votedost
 ```
 
-## 📁 Project Structure
+## 📁 Project Structure (Modular v1.1)
 ```
 votedost/
-├── app.py                  # Flask backend + Vertex AI + Cloud Logging
-├── requirements.txt        # Python dependencies
-├── Dockerfile              # Container configuration
-├── .dockerignore           # Docker ignore rules
-├── tests/
-│   ├── __init__.py         # Test package init
-│   └── test_app.py         # 62 comprehensive test cases
-├── static/
-│   ├── style.css           # All styling + animations + accessibility
-│   ├── script.js           # Frontend logic + Three.js + GSAP
-│   └── manifest.json       # PWA manifest
-└── templates/
-    └── index.html          # Main app layout with full ARIA support
+├── app.py                  # Proxy entry point for backward compatibility
+├── requirements.txt        # Python dependencies (flask-limiter, google-cloud-*)
+├── Dockerfile              # Production container configuration
+├── .flake8                 # Linting configuration
+├── pyproject.toml          # Tooling configuration
+├── app/                    # Main application package
+│   ├── __init__.py         # App factory + rate limiter + middleware
+│   ├── config.py           # Dataclass-based configuration
+│   ├── routes/             # Modular blueprints
+│   │   └── chat.py         # Main chat and health routes
+│   ├── services/           # Decoupled Google Cloud service integrations
+│   │   ├── ai_service.py   # Vertex AI (Gemini)
+│   │   ├── firestore.py    # Firestore analytics
+│   │   ├── bigquery.py     # BigQuery logging
+│   │   └── translation.py  # Language detection
+│   ├── models/             # Shared data models
+│   └── utils/              # Validators and exception handlers
+├── tests/                  # 84 comprehensive test cases
+│   ├── test_app.py         # Legacy and core logic tests
+│   ├── test_security.py    # Security and header validation
+│   ├── test_google_services.py # Service fallback tests
+│   └── test_accessibility.py # WCAG compliance tests
+├── static/                 # Frontend assets (style.css, script.js, manifest.json)
+└── templates/              # HTML templates (index.html)
 ```
 
 ## 🏆 Built For

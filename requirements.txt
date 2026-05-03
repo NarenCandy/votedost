@@ -1,8 +1,15 @@
 flask
+flask-limiter
 gunicorn
 google-cloud-aiplatform
 vertexai
 google-cloud-logging
 google-cloud-monitoring
+google-cloud-firestore
+google-cloud-bigquery
+google-cloud-translate
+google-cloud-secret-manager
+pytest
+pytest-cov
 pytest
 pytest-cov
